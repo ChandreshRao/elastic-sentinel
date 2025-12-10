@@ -1,0 +1,60 @@
+@page
+@model ElasticSentinel.Pages.Connectors.MailConnectorDetail.IndexModel
+
+<div class="pagetitle">
+    <h1>Email Recipients</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">Notification Connectors</li>
+            <li class="breadcrumb-item active">Email Recipients</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnectorDetail[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnectorDetail[0].EmailSubject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnectorDetail[0].ToEmails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnectorDetail[0].CcEmails)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EmailConnectorDetail)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailSubject)
+                </td>
+                <td class="text-break">
+                    @Html.DisplayFor(modelItem => item.ToEmails)
+                </td>
+                <td class="text-break">
+                    @Html.DisplayFor(modelItem => item.CcEmails)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.EmailAlertDetailId"><i class="bx bx-edit" title="Edit"></i></a> |
+                    <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.EmailAlertDetailId"><i class="bx bx-detail" title="Details"></i></a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.EmailAlertDetailId">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

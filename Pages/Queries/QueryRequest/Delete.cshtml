@@ -1,0 +1,76 @@
+@page
+@model ElasticSentinel.Pages.Queries.QueryRequest.DeleteModel
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ElasticDynamicQueryRequestDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.DyanmicQueryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.DyanmicQueryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.HTTPMethod)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.HTTPMethod)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.IndexName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.IndexName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.IsIndexNameExpression)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.IsIndexNameExpression)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QueryType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QueryType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QueryParams)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QueryParams)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.Headers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.Headers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.AuthType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.AuthType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.Body)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.Body)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QuerySource)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QuerySource.SourceName)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="ElasticDynamicQueryRequestDetail.ElasticDynamicQueryDetailId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

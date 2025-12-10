@@ -1,0 +1,53 @@
+@page
+@model ElasticSentinel.Pages.Queries.QuerySource.IndexModel
+<div class="pagetitle">
+    <h1>Query Source</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">KQL Queries</li>
+            <li class="breadcrumb-item active">Query Source</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQuerySource[0].SourceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQuerySource[0].SourceQuery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQuerySource[0].SourceType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ElasticDynamicQuerySource)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourceQuery)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourceType)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.ElasticDynamicQuerySourceId"><i class="bx bx-edit" title="Edit"></i></a> |
+                    <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.ElasticDynamicQuerySourceId"><i class="bx bx-detail" title="Details"></i></a> |
+                    <a class="btn btn-outline-danger btn-sm rounded-0" type="button" asp-page="./Delete" asp-route-id="@item.ElasticDynamicQuerySourceId"><i class="bx bx-trash" title="Delete"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

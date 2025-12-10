@@ -1,0 +1,61 @@
+@page
+@model ElasticSentinel.Pages.Connectors.MailConnector.IndexModel
+
+<div class="pagetitle">
+    <h1>Email Connector</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">Notification Connectors</li>
+            <li class="breadcrumb-item active">Email Connector</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnector[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnector[0].FromEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnector[0].PrimarySMTPServer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConnector[0].IsEnabled)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.EmailConnector != null)
+            @foreach (var item in Model.EmailConnector)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FromEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrimarySMTPServer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEnabled)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.EmailConnectorId"><i class="bx bx-edit" title="Edit"></i></a> |
+                        <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.EmailConnectorId"><i class="bx bx-detail" title="Details"></i></a>
+                        @*<a asp-page="./Delete" asp-route-id="@item.EmailConnectorId">Delete</a>*@
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>

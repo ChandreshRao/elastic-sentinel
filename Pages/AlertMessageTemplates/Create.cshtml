@@ -1,0 +1,47 @@
+@page
+@model ElasticSentinel.Pages.AlertMessageTemplates.CreateModel
+
+<div class="pagetitle">
+    <h1>Alert Message Templates</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item"><a href="/AlertMessageTemplates/Index">Alert Message Templates</a></li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NotificationTemplate.TemplateName" class="control-label"></label>
+                <input asp-for="NotificationTemplate.TemplateName" class="form-control" />
+                <span asp-validation-for="NotificationTemplate.TemplateName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NotificationTemplate.TemplateContent" class="control-label"></label>
+                <textarea asp-for="NotificationTemplate.TemplateContent" class="form-control" rows="20"></textarea>
+                <span asp-validation-for="NotificationTemplate.TemplateContent" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="NotificationTemplate.IsEnabled" /> @Html.DisplayNameFor(model => model.NotificationTemplate.IsEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

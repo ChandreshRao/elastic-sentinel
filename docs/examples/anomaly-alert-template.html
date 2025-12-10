@@ -1,0 +1,39 @@
+<!-- 
+  Example Anomaly Detection Alert Template
+  
+  This template demonstrates how to create an alert notification for anomaly detection.
+  Ideal for threshold breaches, unusual patterns, or aggregated metrics.
+  
+  Available template variables (depends on your Elasticsearch query response mapping):
+  - item.responseCode: Response code or metric identifier
+  - item.count: Number of occurrences or metric value
+  
+  Template Syntax: Uses Scriban templating engine
+  - {{ variable }}: Output variable value
+  - {{- for item in lst }}: Loop through items
+  - {{- end }}: End loop
+-->
+
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px #ccc; font-family: sans-serif;">
+	<!-- Header Section -->
+	<div style="background-color: #f1f1f1; padding: 10px;">
+		<h1 style="margin: auto;">Anomaly Detection Alert</h1>
+		<p style="margin: auto;">An anomaly has been detected in your application metrics</p>
+	</div>
+	
+	<!-- Anomaly Details Section -->
+	<div style="margin: 20px 0; padding: 10px; background-color: #fff3cd; border: 1px solid #ffc107; color: #856404; font-weight: bold;">
+		<h2 style="margin: auto;">Anomaly Details</h2>
+		<ul>
+		{{- for item in lst }}
+			<li>
+				<p style="margin: auto;">Metric/Response Code: <strong>{{item.responseCode}}</strong></p>
+				<p style="margin: auto;">Count/Value: <strong>{{item.count}}</strong></p>
+			</li>
+		{{- end }}
+		</ul>
+	</div>
+	
+	<!-- Footer Section -->
+	<p style="margin: auto;">Please investigate and take appropriate action.</p>
+</div>

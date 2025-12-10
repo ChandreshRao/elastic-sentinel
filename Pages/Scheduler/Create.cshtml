@@ -1,0 +1,83 @@
+@page
+@model ElasticSentinel.Pages.Scheduler.CreateModel
+
+<div class="pagetitle">
+    <h1>Scheduler</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item"><a href="/Scheduler/Index">Scheduler</a></li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.SchedulerName" class="control-label"></label>
+                <input asp-for="AlertSchedulerConfig.SchedulerName" class="form-control" />
+                <span asp-validation-for="AlertSchedulerConfig.SchedulerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.SchedulerGroup" class="control-label"></label>
+                <input asp-for="AlertSchedulerConfig.SchedulerGroup" class="form-control" />
+                <span asp-validation-for="AlertSchedulerConfig.SchedulerGroup" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.CronExp" class="control-label"></label>
+                <input asp-for="AlertSchedulerConfig.CronExp" class="form-control" />
+                <a href="https://www.freeformatter.com/cron-expression-generator-quartz.html" target="_blank">Reference</a>
+                <span asp-validation-for="AlertSchedulerConfig.CronExp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.ElasticConfigId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.ElasticConfigId" class="form-control" asp-items="ViewBag.ElasticConfigId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.ElasticConfigId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.ElasticQueryId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.ElasticQueryId" class="form-control" asp-items="ViewBag.ElasticQueryId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.ElasticQueryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.EmailConnectorId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.EmailConnectorId" class="form-control" asp-items="ViewBag.EmailConnectorId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.EmailConnectorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.EmailAlertDetailId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.EmailAlertDetailId" class="form-control" asp-items="ViewBag.EmailAlertDetailId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.EmailAlertDetailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.MSTeamsConnectorId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.MSTeamsConnectorId" class="form-control" asp-items="ViewBag.MSTeamsConnectorId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.MSTeamsConnectorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertSchedulerConfig.NotificationTemplateId" class="control-label"></label>
+                <select asp-for="AlertSchedulerConfig.NotificationTemplateId" class="form-control" asp-items="ViewBag.NotificationTemplateId"></select>
+                <span asp-validation-for="AlertSchedulerConfig.NotificationTemplateId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="AlertSchedulerConfig.IsEnabled" /> @Html.DisplayNameFor(model => model.AlertSchedulerConfig.IsEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

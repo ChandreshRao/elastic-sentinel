@@ -1,0 +1,61 @@
+@page
+@model ElasticSentinel.Pages.Scheduler.IndexModel
+<div class="pagetitle">
+    <h1>Scheduler</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item active">Scheduler</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AlertSchedulerConfig[0].SchedulerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlertSchedulerConfig[0].SchedulerGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlertSchedulerConfig[0].CronExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlertSchedulerConfig[0].IsEnabled)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AlertSchedulerConfig)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchedulerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchedulerGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CronExp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnabled)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.AlertSchedulerConfigId"><i class="bx bx-edit" title="Edit"></i></a> |
+                    <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.AlertSchedulerConfigId"><i class="bx bx-detail" title="Details"></i></a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.AlertSchedulerConfigId">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <p><a href="https://www.freeformatter.com/cron-expression-generator-quartz.html" target="_blank">Cron Expression Generator</a></p>
+</div>

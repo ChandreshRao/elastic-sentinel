@@ -1,0 +1,83 @@
+@page
+@model ElasticSentinel.Pages.Queries.QueryRequest.DetailsModel
+
+<div>
+    <div class="pagetitle">
+        <h1>Query Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+                <li class="breadcrumb-item">KQL Queries</li>
+                <li class="breadcrumb-item"><a href="/Queries/QueryRequest/Index">Query Request</a></li>
+                <li class="breadcrumb-item active">Details</li>
+            </ol>
+        </nav>
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.DyanmicQueryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.DyanmicQueryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.HTTPMethod)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.HTTPMethod)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.IndexName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.IndexName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.IsIndexNameExpression)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.IsIndexNameExpression)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QueryType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QueryType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QueryParams)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QueryParams)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.Headers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.Headers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.AuthType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.AuthType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.Body)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.Body)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail.QuerySource)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElasticDynamicQueryRequestDetail.QuerySource.SourceName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ElasticDynamicQueryRequestDetail?.ElasticDynamicQueryDetailId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

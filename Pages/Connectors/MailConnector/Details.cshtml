@@ -1,0 +1,71 @@
+@page
+@model ElasticSentinel.Pages.Connectors.MailConnector.DetailsModel
+
+<div>
+    <div class="pagetitle">
+        <h1>Email Connector</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+                <li class="breadcrumb-item">Notification Connectors</li>
+                <li class="breadcrumb-item"><a href="/Connectors/MailConnector/Index">Email Connector</a></li>
+                <li class="breadcrumb-item active">Details</li>
+            </ol>
+        </nav>
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.FromEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.FromEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.PrimarySMTPServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.PrimarySMTPServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.AlternateSMTPServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.AlternateSMTPServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.SMTPPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.SMTPPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailConnector.IsEnabled)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailConnector.IsEnabled)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.EmailConnector?.EmailConnectorId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

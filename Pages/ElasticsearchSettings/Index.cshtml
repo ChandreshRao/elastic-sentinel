@@ -1,0 +1,58 @@
+@page
+@model ElasticSentinel.Pages.ElasticsearchSettings.IndexModel
+
+<div class="pagetitle">
+    <h1>Elasticsearch Settings - Lists</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item active">Elasticsearch Settings</li>
+        </ol>
+    </nav>
+</div>
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticConfiguration[0].ClusterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticConfiguration[0].ElasticHost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticConfiguration[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticConfiguration[0].IsEnabled)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ElasticConfiguration)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClusterName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElasticHost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnabled)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.ElasticConfigId"><i class="bx bx-edit" title="Edit"></i></a> |
+                    <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.ElasticConfigId"><i class="bx bx-detail" title="Details"></i></a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.ElasticConfigId">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

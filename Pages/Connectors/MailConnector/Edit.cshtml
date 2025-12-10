@@ -1,0 +1,74 @@
+@page
+@model ElasticSentinel.Pages.Connectors.MailConnector.EditModel
+
+<div class="pagetitle">
+    <h1>Email Connector</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">Notification Connectors</li>
+            <li class="breadcrumb-item"><a href="/Connectors/MailConnector/Index">Email Connector</a></li>
+            <li class="breadcrumb-item active">Edit</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmailConnector.EmailConnectorId" />
+            <div class="form-group">
+                <label asp-for="EmailConnector.Name" class="control-label"></label>
+                <input asp-for="EmailConnector.Name" class="form-control" />
+                <span asp-validation-for="EmailConnector.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.FromEmail" class="control-label"></label>
+                <input asp-for="EmailConnector.FromEmail" class="form-control" />
+                <span asp-validation-for="EmailConnector.FromEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.PrimarySMTPServer" class="control-label"></label>
+                <input asp-for="EmailConnector.PrimarySMTPServer" class="form-control" />
+                <span asp-validation-for="EmailConnector.PrimarySMTPServer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.AlternateSMTPServer" class="control-label"></label>
+                <input asp-for="EmailConnector.AlternateSMTPServer" class="form-control" />
+                <span asp-validation-for="EmailConnector.AlternateSMTPServer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.SMTPPort" class="control-label"></label>
+                <input asp-for="EmailConnector.SMTPPort" class="form-control" />
+                <span asp-validation-for="EmailConnector.SMTPPort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.Username" class="control-label"></label>
+                <input asp-for="EmailConnector.Username" class="form-control" />
+                <span asp-validation-for="EmailConnector.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConnector.Password" class="control-label"></label>
+                <input type="password" asp-for="EmailConnector.Password" class="form-control" />
+                <span asp-validation-for="EmailConnector.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EmailConnector.IsEnabled" /> @Html.DisplayNameFor(model => model.EmailConnector.IsEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

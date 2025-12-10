@@ -1,0 +1,45 @@
+<!-- 
+  Example Error Alert Template
+  
+  This template demonstrates how to create an alert notification for error events.
+  Customize the styling, fields, and messages to match your organization's needs.
+  
+  Available template variables (depends on your Elasticsearch query response mapping):
+  - item.serverName: Server where the error occurred
+  - item.errorLogDate: When the error was logged
+  - item.timestamp: Event timestamp
+  - item.errorId: Error identifier/code
+  - item.logMessage: Detailed error message
+  
+  Template Syntax: Uses Scriban templating engine
+  - {{ variable }}: Output variable value
+  - {{- for item in lst }}: Loop through items
+  - {{- end }}: End loop
+-->
+
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px #ccc; font-family: sans-serif;">
+	<!-- Header Section -->
+	<div style="background-color: #f1f1f1; padding: 10px;">
+		<h1 style="margin: auto;">Application Error Alert</h1>
+		<p style="margin: auto;">Errors have been detected in your application logs</p>
+	</div>
+	
+	<!-- Error Details Section -->
+	<div style="margin: 20px 0; padding: 10px; background-color: #ffebeb; border: 1px solid #ff9797; color: #ff5252; font-weight: bold;">
+		<h2 style="margin: auto;">Error Details</h2>
+		<ul>
+		{{- for item in lst }}
+			<li>
+				<p style="margin: auto;"><strong>Server:</strong> {{item.serverName}}</p>
+				<p style="margin: auto;"><strong>Error DateTime:</strong> {{item.errorLogDate}}</p>
+				<p style="margin: auto;"><strong>Log DateTime:</strong> {{item.timestamp}}</p>
+				<p style="margin: auto;"><strong>Error Code:</strong> {{item.errorId}}</p>
+				<p style="margin: auto;"><strong>Error Message:</strong> {{item.logMessage}}</p>
+			</li>
+		{{- end }}
+		</ul>
+	</div>
+	
+	<!-- Footer Section -->
+	<p style="margin: auto;">Please investigate and take appropriate action.</p>
+</div>

@@ -1,0 +1,92 @@
+@page
+@model HomeModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<section class="section dashboard">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Recent Activity</h5>
+            <div id="divActivity" class="activity">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/jobshub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    async function start() {
+        try {
+            await connection.start();
+            console.log("SignalR Connected.");
+        } catch (err) {
+            console.log(err);
+            setTimeout(start, 5000);
+        }
+    };
+
+    connection.onclose(async () => {
+        await start();
+    });
+
+    start();
+
+    //connection.on("AlertSchedulerJob", function (message) {
+    //    var li = document.createElement("li");
+    //    document.getElementById("alert-schedule").appendChild(li);
+    //    li.textContent = `${message}`;
+    //});
+
+    //connection.on("ElasticQueryManagerJob", function (message) {
+    //    var li = document.createElement("li");
+    //    document.getElementById("elasticquery-alert").appendChild(li);
+    //    li.textContent = `${message}`;
+    //});
+
+    //var latestMessageContent = document.getElementById("latest-message-content");
+
+    //connection.on("AlertSchedulerJob", function (message) {
+    //    latestMessageContent.innerHTML = message;
+    //    $("#latest-message").fadeIn().delay(5000).fadeOut();
+    //});
+
+    //connection.on("ElasticQueryManagerJob", function (message) {
+    //    latestMessageContent.innerHTML = message;
+    //    $("#latest-message").fadeIn().delay(5000).fadeOut();
+    //});
+
+    connection.on("ElasticSentinelJob", function (currentDtTm, message) {
+        appendMessages(currentDtTm, message);
+    });
+    function appendMessages(currentDtTm, message) {
+        const textStyles = ["text-success", "text-danger", "text-primary", "text-dark", "text-warning"];
+        var divAct = document.getElementById('divActivity');
+        var textStyle = textStyles[Math.floor(Math.random() * textStyles.length)];
+        var divInner = document.createElement('div');
+        divInner.className = "activity-item d-flex";
+        divInner.innerHTML = `<div class="activite-label">${currentDtTm}</div><i class= "bi bi-circle-fill activity-badge ${textStyle} align-self-start"></i><div class="activity-content"> ${message}</div>`;
+        divAct.prepend(divInner);
+        const threshold = 10;
+        if (divAct.children.length > threshold) {
+            for (let i = threshold; i < divAct.children.length; i++) {
+                divAct.children[i].remove(); // remove the child element
+            }
+        }
+    }
+</script>

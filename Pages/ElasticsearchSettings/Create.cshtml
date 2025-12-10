@@ -1,0 +1,64 @@
+@page
+@model ElasticSentinel.Pages.ElasticsearchSettings.CreateModel
+
+<div class="pagetitle">
+    <h1>Elasticsearch Settings</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item"><a href="/ElasticSearchSettings/Index">Elasticsearch Settings</a></li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ElasticConfiguration.ClusterName" class="control-label"></label>
+                <input asp-for="ElasticConfiguration.ClusterName" class="form-control" />
+                <span asp-validation-for="ElasticConfiguration.ClusterName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElasticConfiguration.ElasticHost" class="control-label"></label>
+                <input asp-for="ElasticConfiguration.ElasticHost" class="form-control" />
+                <span asp-validation-for="ElasticConfiguration.ElasticHost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElasticConfiguration.UserName" class="control-label"></label>
+                <input asp-for="ElasticConfiguration.UserName" class="form-control" />
+                <span asp-validation-for="ElasticConfiguration.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElasticConfiguration.Password" class="control-label"></label>
+                <input asp-for="ElasticConfiguration.Password" class="form-control" />
+                <span asp-validation-for="ElasticConfiguration.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElasticConfiguration.CertificateThumbprint" class="control-label"></label>
+                <textarea asp-for="ElasticConfiguration.CertificateThumbprint" class="form-control"></textarea>
+                <span asp-validation-for="ElasticConfiguration.CertificateThumbprint" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ElasticConfiguration.IsEnabled" /> @Html.DisplayNameFor(model => model.ElasticConfiguration.IsEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

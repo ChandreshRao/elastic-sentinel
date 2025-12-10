@@ -1,0 +1,82 @@
+@page
+@model ElasticSentinel.Pages.Scheduler.DetailsModel
+
+<div>
+    <div class="pagetitle">
+        <h1>Scheduler</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Scheduler/Index">Scheduler</a></li>
+                <li class="breadcrumb-item active">Details</li>
+            </ol>
+        </nav>
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.SchedulerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.SchedulerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.SchedulerGroup)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.SchedulerGroup)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.CronExp)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.CronExp)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.ElasticConfig)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.ElasticConfig.ClusterName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.Query)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.Query.QueryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.MailConnector)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.MailConnector.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.MailConnectorDetail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.MailConnectorDetail.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.TeamsConnector)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.TeamsConnector.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.Template)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.Template.TemplateName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AlertSchedulerConfig.IsEnabled)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlertSchedulerConfig.IsEnabled)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.AlertSchedulerConfig?.AlertSchedulerConfigId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

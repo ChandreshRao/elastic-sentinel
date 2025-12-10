@@ -1,0 +1,48 @@
+@page
+@model ElasticSentinel.Pages.Connectors.TeamsConnector.CreateModel
+
+<div class="pagetitle">
+    <h1>Teams Connector</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">Notification Connectors</li>
+            <li class="breadcrumb-item active"><a href="/Connectors/TeamsConnector">Teams Connector</a></li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MSTeamsConnector.Name" class="control-label"></label>
+                <input asp-for="MSTeamsConnector.Name" class="form-control" />
+                <span asp-validation-for="MSTeamsConnector.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MSTeamsConnector.WebhookUrl" class="control-label"></label>
+                <input asp-for="MSTeamsConnector.WebhookUrl" class="form-control" />
+                <span asp-validation-for="MSTeamsConnector.WebhookUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MSTeamsConnector.IsEnabled" /> @Html.DisplayNameFor(model => model.MSTeamsConnector.IsEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

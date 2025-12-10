@@ -1,0 +1,21 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IList<ElasticSentinel.Application.Common.Models.QuartzJob>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Job Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model)
+        {
+            <tr>
+                <td>job.JobName</td>
+            </tr>
+        }
+    </tbody>
+</table>

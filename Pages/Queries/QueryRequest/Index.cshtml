@@ -1,0 +1,96 @@
+@page
+@model ElasticSentinel.Pages.Queries.QueryRequest.IndexModel
+
+<div class="pagetitle">
+    <h1>Query Request</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li class="breadcrumb-item">KQL Queries</li>
+            <li class="breadcrumb-item active">Query Request</li>
+        </ol>
+    </nav>
+</div>
+<hr />
+<p>
+    <a asp-page="Create" class="btn btn-primary" role="button">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].DyanmicQueryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].HTTPMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].IndexName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].IsIndexNameExpression)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].QueryType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].QueryParams)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].Headers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].AuthType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElasticDynamicQueryRequestDetail[0].QuerySource)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ElasticDynamicQueryRequestDetail)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DyanmicQueryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HTTPMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IndexName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsIndexNameExpression)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QueryType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QueryParams)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Headers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Body)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuerySource.SourceName)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm rounded-0" type="button" asp-page="./Edit" asp-route-id="@item.ElasticDynamicQueryDetailId"><i class="bx bx-edit" title="Edit"></i></a> |
+                    <a class="btn btn-outline-success btn-sm rounded-0" type="button" asp-page="./Details" asp-route-id="@item.ElasticDynamicQueryDetailId"><i class="bx bx-detail" title="Details"></i></a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.ElasticDynamicQueryDetailId">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

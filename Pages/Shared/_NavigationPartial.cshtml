@@ -1,0 +1,95 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" asp-page="/Home">
+                <i class="bi bi-house"></i>
+                <span>Home</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" asp-page="/ElasticsearchSettings/Index">
+                <i class="bi bi-wrench"></i>
+                <span>Elasticsearch settings</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " data-bs-target="#connectors-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-link-45deg"></i><span>Notification Connectors</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="connectors-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a asp-page="/Connectors/MailConnector/Index">
+                        <i class="bi bi-circle"></i><span>Email Connector</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Connectors/MailConnectorDetail/Index">
+                        <i class="bi bi-circle"></i><span>Email Recipients</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Connectors/TeamsConnector/Index">
+                        <i class="bi bi-circle"></i><span>Teams Connector</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" asp-page="/AlertMessageTemplates/Index">
+                <i class="bi bi-filetype-html"></i>
+                <span>Alert Message Template</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " data-bs-target="#queries-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-question-diamond-fill"></i><span>KQL Queries</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="queries-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a asp-page="/Queries/QuerySource/Index">
+                        <i class="bi bi-circle"></i><span>Query Source</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Queries/QueryRequest/Index">
+                        <i class="bi bi-circle"></i><span>Query Request</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Queries/QueryResponse/Index">
+                        <i class="bi bi-circle"></i><span>Query Response</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Queries/QueryResponse/QueryResponseStructure/Index">
+                        <i class="bi bi-circle"></i><span>Query Response structure</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Queries/Index">
+                        <i class="bi bi-circle"></i><span>Query Details</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" asp-page="/Scheduler/Index">
+                <i class="bi bi-calendar-check-fill"></i>
+                <span>Scheduler</span>
+            </a>
+        </li>
+    </ul>
+
+</aside>
