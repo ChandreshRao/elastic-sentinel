@@ -21,7 +21,7 @@ internal sealed class RenderNotificationHandler : IRenderNotificationHandler
                 await template.RenderAsync(dataRequest.Data),
 
             RenderNotificationWithListRequest listRequest =>
-                await template.RenderAsync(new { lst = listRequest.DataList }),
+                await template.RenderAsync(new { items = listRequest.DataList }),
 
             _ => throw new ArgumentException($"Unsupported notification request type: {request.GetType().Name}")
         };

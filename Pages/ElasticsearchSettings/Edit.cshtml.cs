@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.ElasticsearchSettings
 {
     public class EditModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public EditModel(SentinelDbContext context)
+        public EditModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
@@ -25,12 +19,12 @@ namespace ElasticSentinel.Pages.ElasticsearchSettings
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.ElasticConfigurations == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var elasticconfiguration =  await _context.ElasticConfigurations.FirstOrDefaultAsync(m => m.ElasticConfigId == id);
+            var elasticconfiguration = await _apiClient.GetAsync<ElasticConfiguration>($"/api/elastic-configurations/{id}");
             if (elasticconfiguration == null)
             {
                 return NotFound();
@@ -48,30 +42,14 @@ namespace ElasticSentinel.Pages.ElasticsearchSettings
                 return Page();
             }
 
-            _context.Attach(ElasticConfiguration).State = EntityState.Modified;
-
-            try
+            var result = await _apiClient.PutAsync<ElasticConfiguration>($"/api/elastic-configurations/{ElasticConfiguration.ElasticConfigId}", ElasticConfiguration);
+            if (result == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ElasticConfigurationExists(ElasticConfiguration.ElasticConfigId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ModelState.AddModelError(string.Empty, "Failed to update Elasticsearch configuration.");
+                return Page();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool ElasticConfigurationExists(short id)
-        {
-          return _context.ElasticConfigurations.Any(e => e.ElasticConfigId == id);
         }
     }
 }

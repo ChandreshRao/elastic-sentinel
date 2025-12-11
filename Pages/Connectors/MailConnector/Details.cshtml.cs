@@ -1,40 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Connectors.MailConnector
 {
     public class DetailsModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DetailsModel(SentinelDbContext context)
+        public DetailsModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
-        public required EmailConnector EmailConnector { get; set; }        public async Task<IActionResult> OnGetAsync(short? id)
+        public required EmailConnector EmailConnector { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.EmailConnectors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var emailconnector = await _context.EmailConnectors.FirstOrDefaultAsync(m => m.EmailConnectorId == id);
+            var emailconnector = await _apiClient.GetAsync<EmailConnector>($"/api/connectors/email/{id}");
             if (emailconnector == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                EmailConnector = emailconnector;
-            }
+            
+            EmailConnector = emailconnector;
             return Page();
         }
     }

@@ -154,6 +154,38 @@ docker run -d \
   elastic-sentinel:latest
 ```
 
+## 🌐 REST API
+
+Elastic Sentinel includes a complete REST API for programmatic access to all resources.
+
+### API Endpoints
+
+| Resource | Base Path | Methods |
+|----------|-----------|---------|
+| Queries | `/api/queries` | GET, POST, PUT, DELETE |
+| Email Connectors | `/api/connectors/email` | GET, POST, PUT, DELETE |
+| Email Recipients | `/api/connectors/email-details` | GET, POST, PUT, DELETE |
+| Teams Connectors | `/api/connectors/teams` | GET, POST, PUT, DELETE |
+| Scheduler Configs | `/api/scheduler/configs` | GET, POST, PUT, DELETE |
+| Scheduler Details | `/api/scheduler/details` | GET, POST, PUT, DELETE |
+| Templates | `/api/templates` | GET, POST, PUT, DELETE |
+
+### Example Usage
+
+```bash
+# Get all queries
+curl -X GET "http://localhost:5000/api/queries"
+
+# Create a query
+curl -X POST "http://localhost:5000/api/queries" \
+  -H "Content-Type: application/json" \
+  -d '{"queryName":"Test","queryDescription":"Test Query"}'
+```
+
+📖 **Full API Documentation**: See [docs/API-Documentation.md](docs/API-Documentation.md)
+
+**Note**: Swagger/OpenAPI documentation temporarily disabled due to .NET 10 compatibility. Use cURL, Postman, or other API clients.
+
 ## ⚙️ Configuration
 
 ### Configuration Files

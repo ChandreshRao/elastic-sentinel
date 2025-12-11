@@ -1,22 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Scheduler
 {
     public class CreateModel : PageModel
     {
         private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public CreateModel(SentinelDbContext context)
+        public CreateModel(SentinelDbContext context, ApiClientService apiClient)
         {
             _context = context;
+            _apiClient = apiClient;
         }
 
         public IActionResult OnGet()
@@ -37,13 +36,17 @@ namespace ElasticSentinel.Pages.Scheduler
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.AlertSchedulerConfigs.Add(AlertSchedulerConfig);
-            await _context.SaveChangesAsync();
+            var result = await _apiClient.PostAsync<AlertSchedulerConfig>("/api/scheduler/configs", AlertSchedulerConfig);
+            if (result == null)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to create scheduler config.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

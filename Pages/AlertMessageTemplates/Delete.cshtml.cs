@@ -1,58 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.AlertMessageTemplates
 {
     public class DeleteModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DeleteModel(SentinelDbContext context)
+        public DeleteModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
-        public required NotificationTemplate NotificationTemplate { get; set; }        public async Task<IActionResult> OnGetAsync(short? id)
+        public required NotificationTemplate NotificationTemplate { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.NotificationTemplateDetails == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var notificationtemplate = await _context.NotificationTemplateDetails.FirstOrDefaultAsync(m => m.NotificationTemplateId == id);
+            var notificationtemplate = await _apiClient.GetAsync<NotificationTemplate>($"/api/templates/{id}");
 
             if (notificationtemplate == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                NotificationTemplate = notificationtemplate;
-            }
+            
+            NotificationTemplate = notificationtemplate;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(short? id)
         {
-            if (id == null || _context.NotificationTemplateDetails == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var notificationtemplate = await _context.NotificationTemplateDetails.FindAsync(id);
 
-            if (notificationtemplate != null)
+            var success = await _apiClient.DeleteAsync($"/api/templates/{id}");
+            if (!success)
             {
-                NotificationTemplate = notificationtemplate;
-                _context.NotificationTemplateDetails.Remove(NotificationTemplate);
-                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Failed to delete notification template.");
+                return Page();
             }
 
             return RedirectToPage("./Index");

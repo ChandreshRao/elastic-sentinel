@@ -1,21 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
+using ElasticSentinel.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElasticSentinel.Pages.Scheduler
 {
     public class DetailsModel : PageModel
     {
+        private readonly ApiClientService _apiClient;
         private readonly SentinelDbContext _context;
 
-        public DetailsModel(SentinelDbContext context)
+        public DetailsModel(ApiClientService apiClient, SentinelDbContext context)
         {
+            _apiClient = apiClient;
             _context = context;
         }
 
@@ -23,11 +22,12 @@ namespace ElasticSentinel.Pages.Scheduler
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.AlertSchedulerConfigs == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
+            // Use DbContext for Details page to get related entities via Include
             var alertschedulerconfig = await _context.AlertSchedulerConfigs
                 .Include(r => r.ElasticConfig)
                 .Include(r => r.MailConnector)
@@ -40,10 +40,8 @@ namespace ElasticSentinel.Pages.Scheduler
             {
                 return NotFound();
             }
-            else
-            {
-                AlertSchedulerConfig = alertschedulerconfig;
-            }
+            
+            AlertSchedulerConfig = alertschedulerconfig;
             return Page();
         }
     }

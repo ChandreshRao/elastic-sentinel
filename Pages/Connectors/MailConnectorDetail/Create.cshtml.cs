@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Connectors.MailConnectorDetail
 {
     public class CreateModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public CreateModel(SentinelDbContext context)
+        public CreateModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         public IActionResult OnGet()
@@ -31,13 +26,17 @@ namespace ElasticSentinel.Pages.Connectors.MailConnectorDetail
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.EmailConnectorDetails == null || EmailConnectorDetail == null)
+            if (!ModelState.IsValid || EmailConnectorDetail == null)
             {
                 return Page();
             }
 
-            _context.EmailConnectorDetails.Add(EmailConnectorDetail);
-            await _context.SaveChangesAsync();
+            var result = await _apiClient.PostAsync<EmailConnectorDetail>("/api/connectors/email-details", EmailConnectorDetail);
+            if (result == null)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to create email connector detail.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

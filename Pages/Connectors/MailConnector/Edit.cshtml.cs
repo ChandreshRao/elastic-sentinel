@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Connectors.MailConnector
 {
     public class EditModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public EditModel(SentinelDbContext context)
+        public EditModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
@@ -25,12 +19,12 @@ namespace ElasticSentinel.Pages.Connectors.MailConnector
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.EmailConnectors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var emailconnector =  await _context.EmailConnectors.FirstOrDefaultAsync(m => m.EmailConnectorId == id);
+            var emailconnector = await _apiClient.GetAsync<EmailConnector>($"/api/connectors/email/{id}");
             if (emailconnector == null)
             {
                 return NotFound();
@@ -48,30 +42,14 @@ namespace ElasticSentinel.Pages.Connectors.MailConnector
                 return Page();
             }
 
-            _context.Attach(EmailConnector).State = EntityState.Modified;
-
-            try
+            var result = await _apiClient.PutAsync<EmailConnector>($"/api/connectors/email/{EmailConnector.EmailConnectorId}", EmailConnector);
+            if (result == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmailConnectorExists(EmailConnector.EmailConnectorId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ModelState.AddModelError(string.Empty, "Failed to update email connector.");
+                return Page();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool EmailConnectorExists(short id)
-        {
-          return _context.EmailConnectors.Any(e => e.EmailConnectorId == id);
         }
     }
 }

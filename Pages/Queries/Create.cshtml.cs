@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Queries
 {
     public class CreateModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public CreateModel(SentinelDbContext context)
+        public CreateModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         public IActionResult OnGet()
@@ -28,7 +23,6 @@ namespace ElasticSentinel.Pages.Queries
         public required ElasticQuery ElasticQuery { get; set; }
         
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid)
@@ -36,10 +30,15 @@ namespace ElasticSentinel.Pages.Queries
                 return Page();
             }
 
-            _context.ElasticQueries.Add(ElasticQuery);
-            await _context.SaveChangesAsync();
+            var result = await _apiClient.PostAsync<ElasticQuery>("/api/queries", ElasticQuery);
+            
+            if (result != null)
+            {
+                return RedirectToPage("./Index");
+            }
 
-            return RedirectToPage("./Index");
+            ModelState.AddModelError(string.Empty, "Failed to create query");
+            return Page();
         }
     }
 }

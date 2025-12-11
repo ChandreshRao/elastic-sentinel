@@ -1,27 +1,23 @@
 using ElasticSentinel.Domain.Entities;
-using ElasticSentinel.Infrastructure.Persistence;
+using ElasticSentinel.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace ElasticSentinel.Pages.Scheduler
 {
     public class IndexModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public IndexModel(SentinelDbContext context)
+        public IndexModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         public IList<AlertSchedulerConfig> AlertSchedulerConfig { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.AlertSchedulerConfigs != null)
-            {
-                AlertSchedulerConfig = await _context.AlertSchedulerConfigs.ToListAsync();
-            }
+            AlertSchedulerConfig = await _apiClient.GetAsync<List<AlertSchedulerConfig>>("/api/scheduler/configs") ?? new List<AlertSchedulerConfig>();
         }
     }
 }

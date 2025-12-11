@@ -1,60 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Connectors.MailConnectorDetail
 {
     public class DeleteModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DeleteModel(SentinelDbContext context)
+        public DeleteModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
-      public EmailConnectorDetail EmailConnectorDetail { get; set; } = default!;
+        public EmailConnectorDetail EmailConnectorDetail { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.EmailConnectorDetails == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var emailconnectordetail = await _context.EmailConnectorDetails.FirstOrDefaultAsync(m => m.EmailAlertDetailId == id);
+            var emailconnectordetail = await _apiClient.GetAsync<EmailConnectorDetail>($"/api/connectors/email-details/{id}");
 
             if (emailconnectordetail == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                EmailConnectorDetail = emailconnectordetail;
-            }
+            
+            EmailConnectorDetail = emailconnectordetail;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(short? id)
         {
-            if (id == null || _context.EmailConnectorDetails == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var emailconnectordetail = await _context.EmailConnectorDetails.FindAsync(id);
 
-            if (emailconnectordetail != null)
+            var success = await _apiClient.DeleteAsync($"/api/connectors/email-details/{id}");
+            if (!success)
             {
-                EmailConnectorDetail = emailconnectordetail;
-                _context.EmailConnectorDetails.Remove(EmailConnectorDetail);
-                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Failed to delete email connector detail.");
+                return Page();
             }
 
             return RedirectToPage("./Index");

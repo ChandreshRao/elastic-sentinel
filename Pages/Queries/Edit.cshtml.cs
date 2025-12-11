@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Queries
 {
     public class EditModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public EditModel(SentinelDbContext context)
+        public EditModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
@@ -25,12 +19,12 @@ namespace ElasticSentinel.Pages.Queries
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.ElasticQueries == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var elasticquery =  await _context.ElasticQueries.FirstOrDefaultAsync(m => m.ElasticQueryId == id);
+            var elasticquery = await _apiClient.GetAsync<ElasticQuery>($"/api/queries/{id}");
             if (elasticquery == null)
             {
                 return NotFound();
@@ -48,30 +42,14 @@ namespace ElasticSentinel.Pages.Queries
                 return Page();
             }
 
-            _context.Attach(ElasticQuery).State = EntityState.Modified;
-
-            try
+            var result = await _apiClient.PutAsync<ElasticQuery>($"/api/queries/{ElasticQuery.ElasticQueryId}", ElasticQuery);
+            if (result == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ElasticQueryExists(ElasticQuery.ElasticQueryId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ModelState.AddModelError(string.Empty, "Failed to update query.");
+                return Page();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool ElasticQueryExists(short id)
-        {
-          return _context.ElasticQueries.Any(e => e.ElasticQueryId == id);
         }
     }
 }

@@ -1,32 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Queries
 {
     public class IndexModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public IndexModel(SentinelDbContext context)
+        public IndexModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         public IList<ElasticQuery> ElasticQuery { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.ElasticQueries != null)
-            {
-                ElasticQuery = await _context.ElasticQueries.ToListAsync();
-            }
+            ElasticQuery = await _apiClient.GetAsync<List<ElasticQuery>>("/api/queries") ?? new List<ElasticQuery>();
         }
     }
 }

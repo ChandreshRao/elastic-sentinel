@@ -1,40 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Connectors.TeamsConnector
 {
     public class DetailsModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DetailsModel(SentinelDbContext context)
+        public DetailsModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
-        public required MSTeamsConnector MSTeamsConnector { get; set; }        public async Task<IActionResult> OnGetAsync(short? id)
+        public required MSTeamsConnector MSTeamsConnector { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.MSTeamsConnectors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var msteamsconnector = await _context.MSTeamsConnectors.FirstOrDefaultAsync(m => m.MSTeamsConnectorId == id);
+            var msteamsconnector = await _apiClient.GetAsync<MSTeamsConnector>($"/api/connectors/teams/{id}");
             if (msteamsconnector == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                MSTeamsConnector = msteamsconnector;
-            }
+            
+            MSTeamsConnector = msteamsconnector;
             return Page();
         }
     }

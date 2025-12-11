@@ -1,58 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.Scheduler
 {
     public class DeleteModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DeleteModel(SentinelDbContext context)
+        public DeleteModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
-        public required AlertSchedulerConfig AlertSchedulerConfig { get; set; }        public async Task<IActionResult> OnGetAsync(short? id)
+        public required AlertSchedulerConfig AlertSchedulerConfig { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.AlertSchedulerConfigs == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var alertschedulerconfig = await _context.AlertSchedulerConfigs.FirstOrDefaultAsync(m => m.AlertSchedulerConfigId == id);
+            var alertschedulerconfig = await _apiClient.GetAsync<AlertSchedulerConfig>($"/api/scheduler/configs/{id}");
 
             if (alertschedulerconfig == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                AlertSchedulerConfig = alertschedulerconfig;
-            }
+            
+            AlertSchedulerConfig = alertschedulerconfig;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(short? id)
         {
-            if (id == null || _context.AlertSchedulerConfigs == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var alertschedulerconfig = await _context.AlertSchedulerConfigs.FindAsync(id);
 
-            if (alertschedulerconfig != null)
+            var success = await _apiClient.DeleteAsync($"/api/scheduler/configs/{id}");
+            if (!success)
             {
-                AlertSchedulerConfig = alertschedulerconfig;
-                _context.AlertSchedulerConfigs.Remove(AlertSchedulerConfig);
-                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Failed to delete scheduler config.");
+                return Page();
             }
 
             return RedirectToPage("./Index");

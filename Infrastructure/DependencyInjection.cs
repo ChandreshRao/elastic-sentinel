@@ -1,6 +1,7 @@
 using ElasticSentinel.Application.Common.Interfaces;
 using ElasticSentinel.Infrastructure.BackgroundJobs;
 using ElasticSentinel.Infrastructure.Persistence;
+using ElasticSentinel.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 
@@ -16,6 +17,13 @@ public static class DependencyInjection
         services.AddDbContext<SentinelDbContext>(options =>
         {
             options.UseSqlite(configuration.GetConnectionString("SentinelDb"));
+        });
+
+        // HTTP Client for internal API calls from Razor Pages
+        services.AddHttpClient<ApiClientService>(client =>
+        {
+            client.BaseAddress = new Uri("http://localhost:5000");
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
         });
 
         // Background Jobs Management (Infrastructure concern)

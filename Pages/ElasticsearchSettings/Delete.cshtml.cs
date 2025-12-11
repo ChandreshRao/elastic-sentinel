@@ -1,58 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ElasticSentinel.Infrastructure.Persistence;
 using ElasticSentinel.Domain.Entities;
+using ElasticSentinel.Infrastructure.Services;
 
 namespace ElasticSentinel.Pages.ElasticsearchSettings
 {
     public class DeleteModel : PageModel
     {
-        private readonly SentinelDbContext _context;
+        private readonly ApiClientService _apiClient;
 
-        public DeleteModel(SentinelDbContext context)
+        public DeleteModel(ApiClientService apiClient)
         {
-            _context = context;
+            _apiClient = apiClient;
         }
 
         [BindProperty]
-        public required ElasticConfiguration ElasticConfiguration { get; set; }        public async Task<IActionResult> OnGetAsync(short? id)
+        public required ElasticConfiguration ElasticConfiguration { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null || _context.ElasticConfigurations == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var elasticconfiguration = await _context.ElasticConfigurations.FirstOrDefaultAsync(m => m.ElasticConfigId == id);
+            var elasticconfiguration = await _apiClient.GetAsync<ElasticConfiguration>($"/api/elastic-configurations/{id}");
 
             if (elasticconfiguration == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                ElasticConfiguration = elasticconfiguration;
-            }
+            
+            ElasticConfiguration = elasticconfiguration;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(short? id)
         {
-            if (id == null || _context.ElasticConfigurations == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var elasticconfiguration = await _context.ElasticConfigurations.FindAsync(id);
 
-            if (elasticconfiguration != null)
+            var success = await _apiClient.DeleteAsync($"/api/elastic-configurations/{id}");
+            if (!success)
             {
-                ElasticConfiguration = elasticconfiguration;
-                _context.ElasticConfigurations.Remove(ElasticConfiguration);
-                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Failed to delete Elasticsearch configuration.");
+                return Page();
             }
 
             return RedirectToPage("./Index");
