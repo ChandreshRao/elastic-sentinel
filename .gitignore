@@ -418,11 +418,11 @@ sentinelLog-*.log
 # Keep example files in docs/examples/
 !docs/examples/*.sql
 
-# Old folders (if they still exist)
-Core/
-Jobs/
-Models/
-Migrations/
+# Old top-level folders (if they still exist)
+/Core/
+/Jobs/
+/Models/
+/Migrations/
 
 # Keep important files in wwwroot but ignore temporary ones
 wwwroot/lib/**/*
@@ -432,7 +432,6 @@ wwwroot/lib/**/*
 appsettings.*.json
 !appsettings.json
 !appsettings.Development.json
-!appsettings.*.example.json
 
 # User secrets
 secrets.json

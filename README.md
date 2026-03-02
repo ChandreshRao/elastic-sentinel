@@ -107,9 +107,6 @@ Domain (Core) ← Application ← Infrastructure ← Presentation
 
 2. **Configure the application**
    ```bash
-   # Copy example configuration
-   cp appsettings.example.json appsettings.json
-   
    # Edit appsettings.json with your actual values
    # OR use User Secrets (recommended for development)
    dotnet user-secrets set "ElasticsearchSettings:Password" "your-password"
@@ -190,9 +187,8 @@ curl -X POST "http://localhost:5000/api/queries" \
 
 ### Configuration Files
 
-- **appsettings.json** - Main configuration (⚠️ DO NOT commit with real credentials)
+- **appsettings.json** - Main configuration (committed with placeholder values — override real credentials via User Secrets or environment variables)
 - **appsettings.Development.json** - Development overrides
-- **appsettings.example.json** - Template with placeholder values (safe to commit)
 - **User Secrets** - Recommended for local development (stored outside project)
 - **Environment Variables** - Recommended for production deployment
 
@@ -282,14 +278,13 @@ docker run -e ElasticsearchSettings__Password=your-password ...
 
 ### Protected Files (Never Commit)
 
-- `appsettings.json`, `appsettings.Development.json` - Configuration with real credentials
+- `appsettings.Production.json`, `appsettings.local.json` - Environment-specific config with real credentials
 - `datasource/*.db*` - SQLite database files
 - `logs/*.log` - Application logs
 - `bin/`, `obj/` - Build artifacts
 
 ### Safe to Share
 
-- `appsettings.example.json` - Template with placeholders
 - `docs/examples/` - Example scripts and templates
 - All source code (`.cs`, `.cshtml`, etc.)
 - Project files (`*.csproj`, `*.sln`)
